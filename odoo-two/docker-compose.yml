@@ -2,7 +2,7 @@ version: '3.1'
 services:
   # docker run -d --name db -e POSTGRES_USER=odoo_user -e POSTGRES_PASSWORD=odoo -e POSTGRES_DB=db_dev -v ${PWD}/pgdata:/data -v ${PWD}/config:/config/ -p 5433:5432 postgres:14
   db:
-    container_name: db
+    container_name: db-odoo-two
     image: postgres:14
     user: root
     environment:
@@ -15,14 +15,16 @@ services:
       - POSTGRES_MAX_WAL_SENDERS=5
       - POSTGRES_WAL_KEEP_SEGMENTS=32
     ports:
-      - "5433:5432"
+      - "5434:5432"
     restart: always             # run as a service
+    networks:
+      - odoo-web
     volumes:
       - ./config:/config/
       - ./pgdata:/data
 
   db_replica:
-    container_name: db_replica
+    container_name: db_replica-odoo-two
     image: postgres:14.0
     user: root
     environment:
@@ -33,7 +35,7 @@ services:
       - POSTGRES_HOST_AUTH_METHOD=trust
       - POSTGRES_REPLICA_FROM=db
     ports:
-      - "5434:5432"
+      - "5436:5432"
     restart: always
     networks:
       - odoo-web
@@ -42,15 +44,15 @@ services:
       - ./pgdata_replica:/data_replica
 
   # docker run -p 10012:8069 --name odoo --link db:db -t odoo:12.0
-  web-odoo-two:
+  web:
     container_name: odoo-two
     image: odoo:12.0
     user: root
     depends_on:
       - db
     ports:
-      - "10012:8069"
-      - "20012:8072" # live chat
+      - "11012:8069"
+      - "21012:8072" # live chat
     tty: true
     # command: --
     command: >
