@@ -20,8 +20,9 @@ services:
     networks:
       - odoo-web
     volumes:
-      - ./config:/config/
-      - ./pgdata:/data
+      - ./odoo-two/config:/config/
+      - ./odoo-two/pgdata:/data
+      - ./odoo-two/archive:/mnt/server/archive
 
   db_replica:
     container_name: db_replica-odoo-two
@@ -40,8 +41,8 @@ services:
     networks:
       - odoo-web
     volumes:
-      - ./config:/config/
-      - ./pgdata_replica:/data_replica
+      - ./odoo-two/config:/config/
+      - ./odoo-two/pgdata_replica:/data_replica
 
   # docker run -p 10012:8069 --name odoo --link db:db -t odoo:12.0
   web:
@@ -71,7 +72,7 @@ services:
       # - ./entrypoint.sh:/entrypoint.sh   # if you want to install additional Python packages, uncomment this line!
       - odoo-web-data:/var/lib/odoo
       - ./addons:/mnt/extra-addons
-      - ./config:/etc/odoo
+      - ./odoo-two/config:/etc/odoo
     restart: always             # run as a service
 
 networks:
