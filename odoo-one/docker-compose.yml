@@ -35,13 +35,15 @@ services:
     ports:
       - "5434:5432"
     restart: always
+    networks:
+      - odoo-web
     volumes:
       - ./config:/config/
       - ./pgdata_replica:/data_replica
 
   # docker run -p 10012:8069 --name odoo --link db:db -t odoo:12.0
-  web:
-    container_name: odoo-12
+  web-odoo-one:
+    container_name: odoo-one
     image: odoo:12.0
     user: root
     depends_on:
@@ -59,6 +61,8 @@ services:
       - USER=odoo_user
       - PASSWORD=odoo
       - DATABASE=db_dev
+    networks:
+      - odoo-web
     volumes:
       #- /etc/timezone:/etc/timezone:ro
       #- /etc/localtime:/etc/localtime:ro
@@ -67,6 +71,10 @@ services:
       - ./addons:/mnt/extra-addons
       - ./config:/etc/odoo
     restart: always             # run as a service
+
+networks:
+  odoo-web:
+    driver: bridge
 
 volumes:
   odoo-web-data:
