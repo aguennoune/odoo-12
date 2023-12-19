@@ -12,14 +12,6 @@ curl -s https://raw.githubusercontent.com/aguennoune/odoo-12/master/odoo-one/run
 
 to set up first Odoo instance @ `localhost:10012` (default master password: `minhng.info`)
 
-and
-
-``` bash
-curl -s https://raw.githubusercontent.com/minhng92/odoo-12-docker-compose/master/run.sh | sudo bash -s odoo-two 11012 21012
-```
-
-to set up another Odoo instance @ `localhost:11012` (default master password: `minhng.info`)
-
 Some arguments:
 * First argument (**odoo-one**): Odoo deploy folder
 * Second argument (**10012**): Odoo port
