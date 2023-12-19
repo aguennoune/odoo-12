@@ -552,4 +552,4 @@ Thanks to :
 
 
 * [minhng92](https://github.com/minhng92)/[odoo-12-docker-compose](https://github.com/minhng92/odoo-12-docker-compose)
-* [Marcel Dempers](`https://github.com/marcel-dempers`)/[docker-development-youtube-series](`https://github.com/marcel-dempers/docker-development-youtube-series`)
+* [Marcel Dempers](https://github.com/marcel-dempers)/[docker-development-youtube-series](https://github.com/marcel-dempers/docker-development-youtube-series)
