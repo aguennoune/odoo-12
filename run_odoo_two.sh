@@ -6,8 +6,8 @@ CHAT=$3
 git clone --depth=1 https://github.com/aguennoune/odoo-12 $DESTINATION
 rm -rf $DESTINATION/.git
 # set permission
-mkdir -p $DESTINATION/odoo-two/config
-mkdir -p $DESTINATION/odoo-two/pgdata
+mkdir -p $DESTINATION/config
+mkdir -p $DESTINATION/pgdata
 sudo chmod -R 777 $DESTINATION
 # config
 if grep -qF "fs.inotify.max_user_watches" /etc/sysctl.conf; then echo $(grep -F "fs.inotify.max_user_watches" /etc/sysctl.conf); else echo "fs.inotify.max_user_watches = 524288" | sudo tee -a /etc/sysctl.conf; fi
