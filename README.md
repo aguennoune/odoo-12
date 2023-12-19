@@ -8,7 +8,7 @@ Install [docker](https://docs.docker.com/get-docker/) and [docker-compose](https
 
 ```bash
 
-curl-shttps://raw.githubusercontent.com/aguennoune/odoo-12/master/run.sh | sudobash-sodoo-one1001220012
+curl -s https://raw.githubusercontent.com/aguennoune/odoo-12/master/odoo-one/run.sh | sudo bash -s odoo-one 10012 20012
 
 ```
 
@@ -18,7 +18,7 @@ and
 
 ```bash
 
-curl-shttps://raw.githubusercontent.com/aguennoune/odoo-12/master/run.sh | sudobash-sodoo-two1101221012
+curl -s https://raw.githubusercontent.com/aguennoune/odoo-12/master/odoo-two/run.sh | sudo bash -s odoo-two 11012 21012
 
 ```
 
@@ -34,11 +34,11 @@ If `curl` is not found, install it:
 
 ```bash
 
-$sudoapt-getinstallcurl
+$sudo apt-get install curl
 
 # or
 
-$sudoyuminstallcurl
+$sudo yum install curl
 
 ```
 
@@ -48,7 +48,7 @@ Start the container:
 
 ```sh
 
-docker-composeup
+docker-compose up
 
 ```
 
@@ -112,7 +112,7 @@ The **addons/** folder contains custom addons. Just put your custom addons if yo
 
 ```bash
 
-docker-composeup-d
+docker-compose up -d
 
 ```
 
@@ -120,7 +120,7 @@ docker-composeup-d
 
 ```bash
 
-docker-composerestart
+docker-compose restart
 
 ```
 
@@ -128,7 +128,7 @@ docker-composerestart
 
 ```bash
 
-docker-composedown
+docker-compose down
 
 ```
 
@@ -306,10 +306,10 @@ Start with instance 1:
 
 ```
 
-cd storage/databases/postgresql/3-replication
+cd odoo-12/
 
 
-docker run -it --rm --name postgres-1 `
+docker run -it --rm --name odoo-one `
 
 --net odoo-web `
 
@@ -398,7 +398,7 @@ Note that we also mount our blank data directory as we will make a new backup in
 
 ```
 
-cd storage/databases/postgresql/3-replication # PWD=odoo-two
+cd odoo-12/ # PWD=odoo-two
 
 
 docker run -it --rm `
@@ -425,7 +425,7 @@ Now we should see PostgreSQL data ready for our second instance in `${PWD}/pgdat
 
 ```
 
-cd storage/databases/postgresql/3-replication # PWD=odoo-two
+cd odoo-12/ # PWD=odoo-two
 
 
 docker run -it --rm --name odoo-two `
@@ -480,7 +480,7 @@ Now lets log into our `odoo-two` instance and view the table:
 
 ```
 
-docker exec -it postgres-2 bash
+docker exec -it odoo-two bash
 
 
 # login to postgres
@@ -545,9 +545,11 @@ Now we understand how to [run PostgreSQL](../1-introduction/README.md), how to [
 
 <imgsrc="./summary.png"alt="Summary">
 
+Tutorial with @marcel-dempers
+
 
 Thanks to :
 
 
 * [minhng92](https://github.com/minhng92)/[odoo-12-docker-compose](https://github.com/minhng92/odoo-12-docker-compose)
-* [Marcel Dempers](`https://github.com/marcel-dempers`)/[docker-development-youtube-series](`https://github.com/marcel-dempers/docker-development-youtube-series`)
+* [Marcel Dempers](https://github.com/marcel-dempers)/[docker-development-youtube-series](https://github.com/marcel-dempers/docker-development-youtube-series)
