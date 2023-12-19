@@ -18,7 +18,7 @@ and
 
 ```bash
 
-curl-s https://raw.githubusercontent.com/aguennoune/odoo-12/master/run.sh | sudo bash-s odoo-two 11012 21012
+curl -s https://raw.githubusercontent.com/aguennoune/odoo-12/master/odoo-two/run.sh | sudo bash -s odoo-two 11012 21012
 
 ```
 
