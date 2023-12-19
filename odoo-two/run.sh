@@ -3,7 +3,7 @@ DESTINATION=$1
 PORT=$2
 CHAT=$3
 # clone Odoo directory
-git clone --depth=1 https://github.com/aguennoune/odoo-12 $DESTINATION
+git clone --depth=1 https://github.com/aguennoune/odoo-12/odoo-two $DESTINATION
 rm -rf $DESTINATION/.git
 # set permission
 mkdir -p $DESTINATION/config
