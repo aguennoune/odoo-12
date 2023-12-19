@@ -8,7 +8,7 @@ Install [docker](https://docs.docker.com/get-docker/) and [docker-compose](https
 
 ```bash
 
-curl-s https://raw.githubusercontent.com/aguennoune/odoo-12/master/run.sh | sudo bash-s odoo-one 10012 20012
+curl -s https://raw.githubusercontent.com/aguennoune/odoo-12/master/odoo-one/run.sh | sudo bash -s odoo-one 10012 20012
 
 ```
 
