@@ -7,7 +7,7 @@ Installing Odoo 12 with one command.
 Install [docker](https://docs.docker.com/get-docker/) and [docker-compose](https://docs.docker.com/compose/install/) yourself, then run:
 
 ``` bash
-curl -s https://raw.githubusercontent.com/minhng92/odoo-12-docker-compose/master/run.sh | sudo bash -s odoo-one 10012 20012
+curl -s https://raw.githubusercontent.com/aguennoune/odoo-12/master/odoo-one/run.sh | sudo bash -s odoo-one 10012 20012
 ```
 
 to set up first Odoo instance @ `localhost:10012` (default master password: `minhng.info`)
