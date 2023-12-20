@@ -101,7 +101,6 @@ services:
       - odoo-web
     # tty: true
     # # command: --
-    # command: ["/dlv.sh"]
     depends_on:
       - db
     restart: always
