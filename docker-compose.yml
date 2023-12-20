@@ -1,0 +1,114 @@
+version: "3.1"
+
+x-app-defaults: &app-defaults
+  user: root
+  # docker run -p 10012:8069 --name odoo --link db:db -t odoo:12.0
+  image: odoo:12.0
+  environment:
+    - URI=http://localhost:8070
+    - DATABASE=db_dev
+    - USERNAME=admin
+    - PASSWORD=admin
+  networks:
+    - odoo-web
+  restart: always
+
+x-db-defaults: &db-defaults
+  # docker run -d --name db -e POSTGRES_USER=odoo_user -e POSTGRES_PASSWORD=odoo -e POSTGRES_DB=db_dev -v ${PWD}/pgdata:/data -v ${PWD}/config:/config/ -p 5433:5432 postgres:14.0
+  user: root
+  image: postgres:14.0
+  networks:
+    - odoo-web
+  ports:
+    - 5432:5432
+  environment:
+    - POSTGRES_PASSWORD=odoo
+    - POSTGRES_USER=odoo_user
+    - POSTGRES_DB=db_dev
+    - PGDATA=/data
+    - POSTGRES_HOST_AUTH_METHOD=trust
+    - POSTGRES_WAL_LEVEL=db_replica
+    - POSTGRES_MAX_WAL_SENDERS=5
+    - POSTGRES_WAL_KEEP_SEGMENTS=32
+  restart: always
+
+x-db-replica-defaults: &db-replica-defaults
+  user: root
+  image: postgres:14.0
+  networks:
+    - odoo-web
+  ports:
+    - 5433:5432
+  environment:
+    - POSTGRES_PASSWORD=odoo
+    - POSTGRES_USER=odoo_user
+    - POSTGRES_DB=db_dev
+    - PGDATA=/data_replica
+    - POSTGRES_HOST_AUTH_METHOD=trust
+    # - POSTGRES_REPLICA_FROM=postgres://odoo_user:odoo@db:5432/db_dev
+    - POSTGRES_REPLICA_FROM=db
+  restart: always
+
+services:
+  app:
+    <<: *app-defaults
+    user: root
+    container_name: odoo-stack
+    volumes:
+      - ./addons:/mnt/extra-addons
+      - ./config:/etc/odoo
+      - odoo-web-data:/var/lib/odoo
+    ports:
+      - 10012:8069
+      - 20012:8072 # live chat
+    tty: true
+    # command: odoo scaffold /mnt/extra-addons/test_module
+    command: >
+              odoo --db_host=db --db_user=odoo_user --db_password=odoo --db_port=5432 -d db_dev --http-interface=0.0.0.0 --http-port=8069 -i base
+    environment:
+      - HOST=db 
+      - USER=odoo_user
+      - PASSWORD=odoo
+    networks:
+      - odoo-web
+    depends_on:
+      - db
+    restart: always
+  db:
+    <<: *db-defaults
+    user: root
+    container_name: db-stack
+    networks:
+      - odoo-web
+    tty: true
+    command: "postgres -c config_file=/config/postgresql.conf"
+    volumes:
+      - ./pgdata:/data
+      - ./config:/config/
+      - ./archive:/mnt/server/archive
+      - type: volume 
+        source: odoo-web-data
+        target: /data
+
+  db_replica:
+    <<: *db-replica-defaults
+    user: root
+    container_name: db-replica-stack
+    volumes:
+      - ./config:/config/
+      - ./pgdata_replica:/data_replica
+    networks:
+      - odoo-web
+    # tty: true
+    # # command: --
+    # command: ["/dlv.sh"]
+    depends_on:
+      - db
+    restart: always
+
+networks:
+  odoo-web:
+    driver: bridge
+
+volumes:
+  odoo-web-data:
