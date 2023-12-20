@@ -7,18 +7,18 @@ Installing Odoo 12 with one command.
 Install [docker](https://docs.docker.com/get-docker/) and [docker-compose](https://docs.docker.com/compose/install/) yourself, then run:
 
 ``` bash
-curl -s https://raw.githubusercontent.com/minhng92/odoo-12-docker-compose/master/run.sh | sudo bash -s odoo-one 10012 20012
+curl -s https://raw.githubusercontent.com/aguennoune/odoo-12/master/run.sh | sudo bash -s odoo-one 10012 20012
 ```
 
-to set up first Odoo instance @ `localhost:10012` (default master password: `minhng.info`)
+to set up first Odoo instance @ `localhost:10012` (default master password: `admin`)
 
 and
 
 ``` bash
-curl -s https://raw.githubusercontent.com/minhng92/odoo-12-docker-compose/master/run.sh | sudo bash -s odoo-two 11012 21012
+curl -s https://raw.githubusercontent.com/aguennoune/odoo-12/master/run.sh | sudo bash -s odoo-two 11012 21012
 ```
 
-to set up another Odoo instance @ `localhost:11012` (default master password: `minhng.info`)
+to set up another Odoo instance @ `localhost:11012` (default master password: `admin`)
 
 Some arguments:
 * First argument (**odoo-one**): Odoo deploy folder
@@ -56,12 +56,21 @@ docker-compose up -d
 **If you get the permission issue**, change the folder permission to make sure that the container is able to access the directory:
 
 ``` sh
-$ git clone https://github.com/minhng92/odoo-12-docker-compose
+$ git clone https://github.com/aguennoune/odoo-12/tree/master
 $ sudo chmod -R 777 addons
-$ sudo chmod -R 777 etc
-$ mkdir -p postgresql
-$ sudo chmod -R 777 postgresql
+$ sudo chmod -R 777 config
 ```
+
+then, after running the container, we need to change the owner of the PostgreSQL data directory to the `odoo` user:
+
+``` sh
+$ sudo chown -R 999:999 config/postgresql.conf
+$ sudo chown -R 999:999 config/pg_hba.conf
+$ sudo chown -R 999:999 config/pg_ident.conf
+$ sudo chown -R 999:999 pgdata_replica
+$ sudo chown -R 999:999 archive
+```
+
 
 Increase maximum number of files watching from 8192 (default) to **524288**. In order to avoid error when we run multiple Odoo instances. This is an *optional step*. These commands are for Ubuntu user:
 
@@ -76,9 +85,9 @@ The **addons/** folder contains custom addons. Just put your custom addons if yo
 
 # Odoo configuration & log
 
-* To change Odoo configuration, edit file: **etc/odoo.conf**.
-* Log file: **etc/odoo-server.log**
-* Default database password (**admin_passwd**) is `minhng.info`, please change it @ [etc/odoo.conf#L55](/etc/odoo.conf#L55)
+* To change Odoo configuration, edit file: **config/odoo.conf**.
+* Log file: **config/odoo-server.log**
+* Default database password (**admin_passwd**) is `minhng.info`, please change it @ [config/odoo.conf#L55](/config/odoo.conf#L55)
 
 # Odoo container management
 
@@ -121,7 +130,7 @@ server {
 # docker-compose.yml
 
 * odoo:12.0
-* postgres:9.5
+* postgres:14.0
 
 # Odoo 12 screenshots
 
