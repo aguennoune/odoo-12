@@ -87,7 +87,7 @@ The **addons/** folder contains custom addons. Just put your custom addons if yo
 
 * To change Odoo configuration, edit file: **config/odoo.conf**.
 * Log file: **config/odoo-server.log**
-* Default database password (**admin_passwd**) is `minhng.info`, please change it @ [config/odoo.conf#L55](/config/odoo.conf#L55)
+* Default database password (**admin_passwd**) is `admin`, please change it @ [config/odoo.conf#L55](/config/odoo.conf#L55)
 
 # Odoo container management
 
