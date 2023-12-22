@@ -56,7 +56,7 @@ docker-compose up -d
 **If you get the permission issue**, change the folder permission to make sure that the container is able to access the directory:
 
 ``` sh
-$ git clone https://github.com/aguennoune/odoo-12/tree/master
+$ git clone https://github.com/aguennoune/odoo-12.git
 $ sudo chmod -R 777 addons
 $ sudo chmod -R 777 config
 ```
